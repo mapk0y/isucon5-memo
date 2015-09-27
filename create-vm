@@ -1,0 +1,28 @@
+#!/bin/bash
+
+PROJECT="serious-unison-108009"
+ZONE="asia-east1-c"
+INSTANCE_NAME="isucon4"
+DEVICE_NAME=${INSTANCE_NAME}
+IMAGE="https://www.googleapis.com/compute/v1/projects/serious-unison-108009/global/images/isucon4"
+MACHINE="n1-standard-1"
+PRE="--preemptible"
+
+gcloud compute --project ${PROJECT} \
+  instances create "${INSTANCE_NAME}" \
+  --zone ${ZONE} \
+  --machine-type "n1-standard-1" \
+  --network "default" \
+  --no-restart-on-failure \
+  --maintenance-policy "TERMINATE" \
+  --scopes "https://www.googleapis.com/auth/devstorage.read_only","https://www.googleapis.com/auth/logging.write" \
+  --tags "http-server" \
+  --image ${IMAGE}\
+  --boot-disk-size "10" \
+  --boot-disk-type "pd-standard" \
+  --boot-disk-device-name ${DEVICE_NAME} \
+  ${PRE}
+
+
+
+
